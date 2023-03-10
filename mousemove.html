@@ -1,0 +1,92 @@
+<html>
+<head>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500" align="center"></canvas>
+
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+
+    <script>
+	var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+	
+    var width = canvas.width;
+    var height = canvas.height;
+	
+	var i=0;
+	var select = false;
+	var x=100;
+	var y=100;
+	
+	image1= new Image(); 	  
+    image1.src = 'images/smille1.png';
+	
+	image2= new Image(); 	  
+    image2.src = 'images/smille2.png';
+	
+	image3= new Image(); 	  
+    image3.src = 'images/smille3.png';
+	
+	images=[
+	image1,
+	image2,
+	image3
+	];
+	
+	image1.onload = function() {};
+	
+	function draw(){
+	 ctx.drawImage(images[i],x,y,100,100);
+	}
+	
+	$('#canvas').mousemove(function(e){
+	var mouseX= e.offsetX || 0;
+	var mouseY= e.offsetY || 0;
+	
+	if (Math.pow(mouseX-x-50,2) + Math.pow(mouseY-y-50,2) < Math.pow(50,2))
+	{i=1;} else {i=0;}
+	
+	if (select) {
+	x=mouseX-50;
+	y=mouseY-50;
+	}
+	});
+	
+	$('#canvas').click(function(e){
+	var mouseX= e.offsetX || 0;
+	var mouseY= e.offsetY || 0;
+	
+	if (Math.pow(mouseX-x-50,2) + Math.pow(mouseY-y-50,2) < Math.pow(50,2))
+	{i=2;}
+	});
+	
+	$('#canvas').mousedown(function(e){
+	var mouseX= e.offsetX || 0;
+	var mouseY= e.offsetY || 0;
+	
+	if (Math.pow(mouseX-x-50,2) + Math.pow(mouseY-y-50,2) < Math.pow(50,2))
+	{select=true;}
+	});
+	
+	$('#canvas').mouseup(function(){
+	select=false;
+	});
+	
+	$('#canvas').mouseout(function(){
+	if (select){
+	select=false;
+	x=100;
+	y=100;
+	}
+	});
+
+   
+var intervalId = setInterval(function () {
+      ctx.clearRect(0, 0, width, height);
+     draw();
+      ctx.strokeRect(0, 0, width, height);
+    }, 30);
+
+    </script>
+</body>
+</html>
